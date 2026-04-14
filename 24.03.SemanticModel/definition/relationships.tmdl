@@ -1,0 +1,50 @@
+relationship AutoDetected_e32f03ce-90ef-477a-bb9c-8842d79d05fb
+	fromColumn: F_Matriculas.cod_turma
+	toColumn: Dim_Turma.cod_turma
+
+relationship AutoDetected_9f0574bc-e680-43f4-8731-a1be1bfa15d2
+	fromColumn: F_Matriculas.cod_curso
+	toColumn: Dim_Curso.cod_curso
+
+relationship AutoDetected_fb27e438-f436-4e1c-92be-43c0981e3b38
+	fromColumn: F_Matriculas.codigo_pessoa
+	toColumn: Dim_Pessoa.codigo_pessoa
+
+relationship AutoDetected_fc1d6530-d657-410e-aaf2-230e81c99e94
+	fromColumn: F_Matriculas.cod_endereco
+	toColumn: Dim_Endereco.cod_endereco
+
+relationship AutoDetected_e624ea0b-75ca-44d5-bdec-55775ebe6f77
+	fromColumn: F_Matriculas.cod_intituicao
+	toColumn: Dim_Instituicao.cod_intituicao
+
+relationship AutoDetected_71ea7681-c743-465d-9bb3-80b6ead8942c
+	fromColumn: F_Matriculas.cod_conteudista
+	toColumn: Dim_Conteudista.cod_conteudista
+
+relationship 71cd3339-5d85-4d28-bed7-cfff0bc418f5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Data.Data
+	toColumn: LocalDateTable_48ce22f4-4886-40df-b570-237194f66554.Date
+
+relationship 7b3056b4-6cca-1e7c-5e19-d4db0a01de5b
+	fromColumn: F_Matriculas.dt_matricula
+	toColumn: Dim_Data.Data
+
+relationship 1dbf3bcc-0b28-93b1-a959-ea896b346c4a
+	fromColumn: F_Matriculas.cod_poder
+	toColumn: Dim_Poder.cod_poder
+
+relationship b4bf8073-cf7d-d2b8-4bed-cb490190744e
+	fromColumn: F_Matriculas.cod_tematica
+	toColumn: Dim_Tematica.cod_tematica
+
+relationship cc6766ad-e77e-9b91-00b5-ffb67bc835b7
+	fromColumn: F_Matriculas.cod_esfera
+	toColumn: Dim_Esfera.cod_esfera
+
+relationship 14c25d5b-43cd-1d92-785a-23ac43ffe1b9
+	isActive: false
+	fromColumn: F_Matriculas.dt_fim
+	toColumn: Dim_Data.Data
+

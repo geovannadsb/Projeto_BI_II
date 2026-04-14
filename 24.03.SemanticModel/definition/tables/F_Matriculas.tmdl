@@ -1,0 +1,163 @@
+table F_Matriculas
+	lineageTag: c5369f62-038f-4e7e-b1c8-3f7b1937c378
+
+	column cod_matricula
+		dataType: string
+		lineageTag: ebce693a-00d5-4659-92cc-fd8ecd86f570
+		summarizeBy: none
+		sourceColumn: cod_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_matricula
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 603b4c18-7db4-4e33-962b-2172501a162b
+		summarizeBy: none
+		sourceColumn: dt_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column cod_turma
+		dataType: int64
+		formatString: 0
+		lineageTag: df173b04-0b14-47b5-b706-77c60f7f0736
+		summarizeBy: none
+		sourceColumn: cod_turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_curso
+		dataType: int64
+		formatString: 0
+		lineageTag: d0a4e281-0f59-436d-a0d8-1bb60098469c
+		summarizeBy: none
+		sourceColumn: cod_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_fim
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1029e8d0-419e-41a1-a970-4e6717712aa4
+		summarizeBy: none
+		sourceColumn: dt_fim
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column sit_turma
+		dataType: string
+		lineageTag: da5b93a6-782e-45f9-8b47-e25ee62f0d0f
+		summarizeBy: none
+		sourceColumn: sit_turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column codigo_pessoa
+		dataType: string
+		lineageTag: caeec201-9019-406e-ad91-e9ce2b377f6b
+		summarizeBy: none
+		sourceColumn: codigo_pessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column sit_matricula
+		dataType: string
+		lineageTag: 73204e71-8a43-445c-8b13-67ce3adc53dd
+		summarizeBy: none
+		sourceColumn: sit_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_poder
+		dataType: int64
+		formatString: 0
+		lineageTag: e7f3a3f1-55d5-4fe6-9234-5235b27d95b2
+		summarizeBy: none
+		sourceColumn: cod_poder
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_esfera
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b27c96b-4f4f-45ca-bcab-fde5aa9a9168
+		summarizeBy: none
+		sourceColumn: cod_esfera
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_endereco
+		dataType: int64
+		formatString: 0
+		lineageTag: b5ed1d8e-201c-45c7-a239-692b789b05fe
+		summarizeBy: none
+		sourceColumn: cod_endereco
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_tematica
+		dataType: int64
+		formatString: 0
+		lineageTag: 1764a4a5-aacc-4395-ae3e-5435a4a984cc
+		summarizeBy: none
+		sourceColumn: cod_tematica
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_intituicao
+		dataType: int64
+		formatString: 0
+		lineageTag: 421ad33a-4aa8-420b-afe4-fbe5687424b9
+		summarizeBy: none
+		sourceColumn: cod_intituicao
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_conteudista
+		dataType: int64
+		formatString: 0
+		lineageTag: e6d66e86-f75b-49b7-bc0c-9093ec7c9e56
+		summarizeBy: none
+		sourceColumn: cod_conteudista
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Matriculas = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\geova\OneDrive - UniCEUB\Área de Trabalho\amostra_evg.csv"),[Delimiter=",", Columns=25, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cod_matricula", type text}, {"dt_matricula", type datetime}, {"nacionalidade", type text}, {"cod_turma", Int64.Type}, {"nome_turma", type text}, {"modalidade_turma", type text}, {"cod_curso", Int64.Type}, {"nome_curso", type text}, {"carga_horaria", Int64.Type}, {"dt_fim", type datetime}, {"sit_turma", type text}, {"instituicao", type text}, {"municipio_pessoa", type text}, {"uf_pessoa", type text}, {"conteudista", type text}, {"tematica", type text}, {"codigo_pessoa", type text}, {"sexo", type text}, {"idade", Int64.Type}, {"sit_matricula", type text}, {"poder", type text}, {"esfera", type text}, {"email_pessoa", type text}, {"telefone_pessoa", Int64.Type}, {"email_conteudista", type text}}),
+				    #"Texto Extraído Antes do Delimitador" = Table.TransformColumns(#"Tipo Alterado", {{"dt_matricula", each Text.BeforeDelimiter(Text.From(_, "pt-BR"), " "), type text}}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Texto Extraído Antes do Delimitador",{{"dt_matricula", type date}}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Tipo Alterado1", {"poder"}, Dim_Poder, {"poder"}, "Dim_Poder", JoinKind.LeftOuter),
+				    #"Dim_Poder Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "Dim_Poder", {"cod_poder"}, {"cod_poder"}),
+				    #"Consultas Mescladas1" = Table.NestedJoin(#"Dim_Poder Expandido", {"esfera"}, Dim_Esfera, {"esfera"}, "Dim_Esfera", JoinKind.LeftOuter),
+				    #"Dim_Esfera Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas1", "Dim_Esfera", {"cod_esfera"}, {"cod_esfera"}),
+				    #"Consultas Mescladas2" = Table.NestedJoin(#"Dim_Esfera Expandido", {"municipio_pessoa"}, Dim_Endereco, {"municipio_pessoa"}, "Dim_Endereco", JoinKind.LeftOuter),
+				    #"Dim_Endereco Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas2", "Dim_Endereco", {"cod_endereco"}, {"cod_endereco"}),
+				    #"Consultas Mescladas3" = Table.NestedJoin(#"Dim_Endereco Expandido", {"tematica"}, Dim_Tematica, {"tematica"}, "Dim_Tematica", JoinKind.LeftOuter),
+				    #"Dim_Tematica Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas3", "Dim_Tematica", {"cod_tematica"}, {"cod_tematica"}),
+				    #"Consultas Mescladas4" = Table.NestedJoin(#"Dim_Tematica Expandido", {"instituicao"}, Dim_Instituicao, {"instituicao"}, "Dim_Instituicao", JoinKind.LeftOuter),
+				    #"Dim_Instituicao Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas4", "Dim_Instituicao", {"cod_intituicao"}, {"cod_intituicao"}),
+				    #"Consultas Mescladas5" = Table.NestedJoin(#"Dim_Instituicao Expandido", {"conteudista"}, Dim_Conteudista, {"conteudista"}, "Dim_Conteudista", JoinKind.LeftOuter),
+				    #"Dim_Conteudista Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas5", "Dim_Conteudista", {"cod_conteudista"}, {"cod_conteudista"}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Dim_Conteudista Expandido",{"nome_turma", "modalidade_turma", "carga_horaria"}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Colunas Removidas",{"cod_matricula", "dt_matricula", "dt_fim", "nacionalidade", "cod_turma", "cod_curso", "nome_curso", "sit_turma", "instituicao", "municipio_pessoa", "uf_pessoa", "conteudista", "tematica", "codigo_pessoa", "sexo", "idade", "sit_matricula", "poder", "esfera", "email_pessoa", "telefone_pessoa", "email_conteudista", "cod_poder", "cod_esfera", "cod_endereco", "cod_tematica", "cod_intituicao", "cod_conteudista"}),
+				    #"Colunas Removidas1" = Table.RemoveColumns(#"Colunas Reordenadas",{"nacionalidade", "nome_curso", "instituicao", "municipio_pessoa", "uf_pessoa", "tematica", "sexo", "idade", "poder", "esfera", "email_pessoa", "telefone_pessoa", "email_conteudista"}),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colunas Removidas1",{{"dt_fim", type date}, {"dt_matricula", type date}}),
+				    #"Colunas Removidas2" = Table.RemoveColumns(#"Tipo Alterado2",{"conteudista"}),
+				    #"Tipo Alterado3" = Table.TransformColumnTypes(#"Colunas Removidas2",{{"cod_curso", Int64.Type}})
+				in
+				    #"Tipo Alterado3"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

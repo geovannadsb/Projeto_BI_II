@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "4fe2979a5a98a5bdbc20",
+  "position": {
+    "x": 9.78266061619298,
+    "y": 13.451158347265345,
+    "z": 1000,
+    "height": 80.706950083592076,
+    "width": 699.460234057798,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Panorama",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Candara",
+                      "fontSize": "28pt",
+                      "color": "#33ae81"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Candara",
+                      "fontSize": "28pt"
+                    }
+                  },
+                  {
+                    "value": "Educacional 2025 ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Candara",
+                      "fontSize": "28pt",
+                      "color": "#ffffff"
+                    }
+                  },
+                  {
+                    "value": "| ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Candara",
+                      "fontSize": "28pt",
+                      "color": "#33ae81"
+                    }
+                  },
+                  {
+                    "value": "BUSINESS INTELLIGENCE II",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Candara",
+                      "fontSize": "12pt",
+                      "color": "#ffffff"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,56 @@
+table Dim_Endereco
+	lineageTag: cf238a2e-af9b-4ae4-9a79-70ec9ca54330
+
+	column cod_endereco
+		dataType: int64
+		formatString: 0
+		lineageTag: ea998b31-c337-4f7a-bc2d-1dee048fd65a
+		summarizeBy: none
+		sourceColumn: cod_endereco
+
+		annotation SummarizationSetBy = Automatic
+
+	column municipio_pessoa
+		dataType: string
+		lineageTag: 4f4cbfc2-ccaf-4924-be4d-3dc8750e044d
+		summarizeBy: none
+		sourceColumn: municipio_pessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column uf_pessoa
+		dataType: string
+		lineageTag: d580fc7a-8ac3-4514-81b5-654d5168e7db
+		summarizeBy: none
+		sourceColumn: uf_pessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Endereco = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\geova\OneDrive - UniCEUB\Área de Trabalho\amostra_evg.csv"),[Delimiter=",", Columns=25, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cod_matricula", type text}, {"dt_matricula", type datetime}, {"nacionalidade", type text}, {"cod_turma", Int64.Type}, {"nome_turma", type text}, {"modalidade_turma", type text}, {"cod_curso", Int64.Type}, {"nome_curso", type text}, {"carga_horaria", Int64.Type}, {"dt_fim", type datetime}, {"sit_turma", type text}, {"instituicao", type text}, {"municipio_pessoa", type text}, {"uf_pessoa", type text}, {"conteudista", type text}, {"tematica", type text}, {"codigo_pessoa", type text}, {"sexo", type text}, {"idade", Int64.Type}, {"sit_matricula", type text}, {"poder", type text}, {"esfera", type text}, {"email_pessoa", type text}, {"telefone_pessoa", Int64.Type}, {"email_conteudista", type text}}),
+				    #"Texto Extraído Antes do Delimitador" = Table.TransformColumns(#"Tipo Alterado", {{"dt_matricula", each Text.BeforeDelimiter(Text.From(_, "pt-BR"), " "), type text}}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Texto Extraído Antes do Delimitador",{{"dt_matricula", type date}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado1",{"municipio_pessoa", "uf_pessoa"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas", {"municipio_pessoa"}),
+				    #"Índice Adicionado" = Table.AddIndexColumn(#"Duplicatas Removidas", "Índice", 111, 7, Int64.Type),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Índice Adicionado",{"Índice"}),
+				    #"Índice Adicionado1" = Table.AddIndexColumn(#"Colunas Removidas", "Índice", 111, 2, Int64.Type),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Índice Adicionado1",{"Índice", "municipio_pessoa", "uf_pessoa"}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Colunas Reordenadas",{{"Índice", "cod_endereco"}}),
+				    #"Colunas Removidas1" = Table.RemoveColumns(#"Colunas Renomeadas",{"cod_endereco"}),
+				    #"Linhas em Branco Removidas" = Table.SelectRows(#"Colunas Removidas1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Índice Adicionado2" = Table.AddIndexColumn(#"Linhas em Branco Removidas", "Índice", 10, 7, Int64.Type),
+				    #"Colunas Reordenadas1" = Table.ReorderColumns(#"Índice Adicionado2",{"Índice", "municipio_pessoa", "uf_pessoa"}),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(#"Colunas Reordenadas1",{{"Índice", "cod_endereco"}})
+				in
+				    #"Colunas Renomeadas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

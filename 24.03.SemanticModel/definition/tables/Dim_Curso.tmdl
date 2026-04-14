@@ -1,0 +1,49 @@
+table Dim_Curso
+	lineageTag: 0ea6656d-ed63-4612-9a63-2203b5809849
+
+	column cod_curso
+		dataType: int64
+		formatString: 0
+		lineageTag: 39fb846b-1b1d-41ab-94de-6b6b4473e9e2
+		summarizeBy: none
+		sourceColumn: cod_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_curso
+		dataType: string
+		lineageTag: fbd69dd4-aa82-4a41-94fb-3074df6d4f70
+		summarizeBy: none
+		sourceColumn: nome_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column carga_horaria
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c1e6d7c-c72d-4ef3-bbbf-789bad3aec50
+		summarizeBy: none
+		sourceColumn: carga_horaria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Curso = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\geova\OneDrive - UniCEUB\Área de Trabalho\amostra_evg.csv"),[Delimiter=",", Columns=25, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cod_matricula", type text}, {"dt_matricula", type datetime}, {"nacionalidade", type text}, {"cod_turma", Int64.Type}, {"nome_turma", type text}, {"modalidade_turma", type text}, {"cod_curso", Int64.Type}, {"nome_curso", type text}, {"carga_horaria", Int64.Type}, {"dt_fim", type datetime}, {"sit_turma", type text}, {"instituicao", type text}, {"municipio_pessoa", type text}, {"uf_pessoa", type text}, {"conteudista", type text}, {"tematica", type text}, {"codigo_pessoa", type text}, {"sexo", type text}, {"idade", Int64.Type}, {"sit_matricula", type text}, {"poder", type text}, {"esfera", type text}, {"email_pessoa", type text}, {"telefone_pessoa", Int64.Type}, {"email_conteudista", type text}}),
+				    #"Texto Extraído Antes do Delimitador" = Table.TransformColumns(#"Tipo Alterado", {{"dt_matricula", each Text.BeforeDelimiter(Text.From(_, "pt-BR"), " "), type text}}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Texto Extraído Antes do Delimitador",{{"dt_matricula", type date}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado1",{"cod_curso", "nome_curso", "carga_horaria"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas", {"cod_curso"}),
+				    #"Linhas Classificadas" = Table.Sort(#"Duplicatas Removidas",{{"cod_curso", Order.Ascending}}),
+				    #"Linhas em Branco Removidas" = Table.SelectRows(#"Linhas Classificadas", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Linhas em Branco Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
