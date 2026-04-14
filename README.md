@@ -99,7 +99,7 @@ A imagem abaixo representa o modelo desenhado em aula, que serviu como base para
 
 ## Modelagem (estrutura definida em aula)
 
-![Modelagem](quadro.png)
+![Modelagem](quadro.jpg)
 
 ---
 
