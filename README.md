@@ -62,12 +62,14 @@ O dashboard conta com:
 
 ## Modelagem de Dados
 
-O projeto foi estruturado utilizando o modelo **estrela (Star Schema)**, com separação entre:
+A modelagem foi construída em sala de aula junto com o professor, seguindo o padrão **Star Schema**.
+
+Durante esse processo, foram definidas:
 
 - **Tabela Fato**: matrículas  
 - **Dimensões**: data, curso, instituição, entre outras  
 
-Isso garante melhor organização e desempenho nas análises.
+A imagem abaixo representa o modelo desenhado em aula, que serviu como base para a implementação no Power BI.
 
 ---
 
@@ -75,7 +77,7 @@ Isso garante melhor organização e desempenho nas análises.
 
 - Alguns estados concentram grande parte das matrículas  
 - A maioria das matrículas está na situação **concluída**  
-- Existe variação ao longo dos meses, indicando possível sazonalidade  
+- Existe variação ao longo do tempo, indicando possível sazonalidade  
 - A distribuição de cursos e alunos não é uniforme  
 
 ---
@@ -95,9 +97,9 @@ Isso garante melhor organização e desempenho nas análises.
 
 ---
 
-## Modelagem
+## Modelagem (estrutura definida em aula)
 
-![Modelagem](COLOQUE_AQUI_O_NOME_DA_SUA_IMAGEM_DA_MODELAGEM.png)
+![Modelagem](quadro.png)
 
 ---
 
