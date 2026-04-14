@@ -54,7 +54,6 @@ O dashboard foi pensado para responder questões como:
 - Total de Matrículas  
 - Total de Alunos  
 - Quantidade de Cursos  
-- Taxa de Conclusão  
 
 ---
 
