@@ -14,6 +14,16 @@ Projeto de Business Intelligence desenvolvido no Power BI para análise de dados
 
 ---
 
+## Visão do Dashboard
+
+<p align="center">
+  <img src="Painel.png" width="900"/>
+  <br>
+  <em>Painel principal com indicadores e visualizações do projeto</em>
+</p>
+
+---
+
 ## Sobre o Projeto
 
 Este projeto foi desenvolvido como atividade prática da disciplina de **Business Intelligence II**, com o objetivo de aplicar conceitos de:
@@ -69,7 +79,13 @@ Durante esse processo, foram definidas:
 - **Tabela Fato**: matrículas  
 - **Dimensões**: data, curso, instituição, entre outras  
 
-A imagem abaixo representa o modelo desenhado em aula, que serviu como base para a implementação no Power BI.
+A imagem abaixo representa o modelo desenhado no quadro durante a aula, que serviu como base para a implementação no Power BI.
+
+<p align="center">
+  <img src="quadro.jpg" width="600"/>
+  <br>
+  <em>Modelagem definida em aula (estrutura estrela)</em>
+</p>
 
 ---
 
@@ -88,18 +104,6 @@ A imagem abaixo representa o modelo desenhado em aula, que serviu como base para
 - Power Query  
 - DAX  
 - GitHub  
-
----
-
-## Visualização do Dashboard
-
-![Dashboard](Painel.png)
-
----
-
-## Modelagem (estrutura definida em aula)
-
-![Modelagem](quadro.jpg)
 
 ---
 
