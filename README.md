@@ -6,7 +6,7 @@
 <h1 align="center">Panorama Educacional 2025</h1>
 
 <p align="center">
-Projeto de Business Intelligence desenvolvido no Power BI para análise de dados educacionais no Brasil.
+Projeto de Business Intelligence desenvolvido no Power BI para análise de dados educacionais.
 <br />
 </p>
 
